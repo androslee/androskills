@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sherlock"
+  short_description: "Find and select useful agent skills"
+  default_prompt: "Use $sherlock to find the best available skill for this task."

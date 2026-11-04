@@ -1,6 +1,6 @@
 # Sherlock
 
-Sherlock helps an AI agent understand a request, find relevant skills already available to its harness, and look for external skills when an installed one does not fit. It is a small standalone skill project, inspired by [tstack](https://github.com/t3dotgg/tstack)'s `skills/<name>/SKILL.md` layout.
+Androskills is a collection of portable agent skills, inspired by [tstack](https://github.com/t3dotgg/tstack)'s `skills/<name>/SKILL.md` layout. **Sherlock** finds suitable skills for a request. **Ladder** coordinates an ordered sequence of user-chosen models to work on and review a task.
 
 **Status:** first prototype. Sherlock can be invoked as `$sherlock` in compatible harnesses. An installed skill does not, by itself, force an agent to route every prompt through it; true before-every-prompt behavior needs an explicit integration in the host harness. No such hook is included here. See [design](docs/DESIGN.md).
 
@@ -16,19 +16,29 @@ Sherlock uses the agent's reasoning to generalize and select skills. The include
 
 ## Install
 
-Copy the `sherlock` folder into a skill directory supported by your harness:
+Copy the skills you want into a skill directory supported by your harness:
 
 ```bash
 # DSH, for your user account
 mkdir -p ~/.dsh/skills
-cp -R skills/sherlock ~/.dsh/skills/
+cp -R skills/sherlock skills/ladder ~/.dsh/skills/
 
 # Codex, for your user account
 mkdir -p ~/.codex/skills
-cp -R skills/sherlock ~/.codex/skills/
+cp -R skills/sherlock skills/ladder ~/.codex/skills/
 ```
 
 Run these commands from this project's root. Do not overwrite an existing skill without reviewing it. Harnesses may need a fresh session to discover changes. DSH's catalog can also include project-specific, bundled and custom providers; filesystem scanning cannot represent all of those sources. Sherlock does not alter harness configuration or restart DSH.
+
+## Ladder: work across models
+
+Invoke `$ladder` and give it an ordered list of available provider/model IDs and a job for each stage. For example, a local model can implement a change, a lower-cost cloud model can review and fix it, and a stronger cloud model can perform the final review. Include any spending limits and what information each provider may receive. You can use a different order or number of stages.
+
+By default each rung works through its assigned task and fixes what it can before handing off. It gets up to three complete work/review passes, including its initial pass, and stops retrying an individual blocker after two consecutive attempts without progress. A pass can contain many edits and tool calls. The next rung receives the remaining issues; later review stages still run when earlier ones succeed. You can set different limits for each rung. These are skill instructions, so a host must enforce any hard spending or execution limits.
+
+To reuse a list, copy [the example profile](skills/ladder/ladder.example.md) to `~/.config/androskills/ladder.md` and fill it in. The profile is read as instructions; it is not a program or a model configuration. Keep credentials out of it. A current request can override it.
+
+**Host support matters:** The skill does not install models, switch the active model, delegate across providers, enforce budgets, or send calls by itself. The harness must expose and permit the selected models and switching or delegation. If it cannot run a stage, Ladder preserves the work and provides a handoff for the user to run with the selected model. It reports which stages actually ran. Installing or invoking Sherlock does not automatically run Ladder on every prompt.
 
 ## Try the helper
 

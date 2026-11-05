@@ -21,11 +21,11 @@ Copy the skills you want into a skill directory supported by your harness:
 ```bash
 # DSH, for your user account
 mkdir -p ~/.dsh/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify ~/.dsh/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth ~/.dsh/skills/
 
 # Codex, for your user account
 mkdir -p ~/.codex/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify ~/.codex/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth ~/.codex/skills/
 ```
 
 Run these commands from this project's root. Do not overwrite an existing skill without reviewing it. Harnesses may need a fresh session to discover changes. DSH's catalog can also include project-specific, bundled and custom providers; filesystem scanning cannot represent all of those sources. Sherlock does not alter harness configuration or restart DSH.
@@ -47,6 +47,17 @@ To reuse a list, copy [the six-stage example profile](skills/ladder/ladder.examp
 Invoke `$remote-verify` alongside `$ladder` or another workflow when a task needs verification on authorized external machines. Specify which stage or stages require it, the approved targets or inventory group, and the expected behavior. If physical hardware is required, say so. The modifier keeps verification within the current stage and carries results forward; it does not alter Ladder or automatically grant remote access. The harness must provide and enforce the necessary tools, permissions and limits. If required verification cannot run, the stage must report it as blocked rather than passed. See [the skill instructions](skills/remote-verify/SKILL.md).
 
 Example: `$ladder $remote-verify Implement the change and verify each implementation stage on the authorized test hosts in inventory group staging-lab; use the existing deployment workflow and report the candidate version, hosts and observed results.`
+
+## Model selection and project health
+
+- `$model-scout`: compare available models for a task or Ladder stage using current, source-linked quality, preference and provider pricing evidence. Public benchmark results may not represent a local quantization or your actual workload. The skill advises; it does not automatically discover every account or change models.
+- `$health-baseline`: measure relevant performance, resource use and maintenance cost, then compare with a reproducible baseline and investigate meaningful regressions. It can review redundant tests without assuming fewer tests are better. Ongoing tracking and thresholds require project tooling; the skill does not run on a schedule by itself.
+
+Both skills work independently or alongside Ladder. See [model scout](skills/model-scout/SKILL.md) and [health baseline](skills/health-baseline/SKILL.md).
+
+## Low-bandwidth responses
+
+Use `$low-bandwidth` for concise responses over a slow link. Ask for **pager** or **tweet** mode for a single response of at most 140 Unicode code points, or provide another limit and counting rule. Necessary accuracy and required disclosures still apply. Character counts do not guarantee a byte limit or a fit on a particular screen, and the skill cannot enforce transport limits or suppress host-generated messages. See [low-bandwidth](skills/low-bandwidth/SKILL.md).
 
 ## Try the helper
 

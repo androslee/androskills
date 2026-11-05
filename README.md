@@ -1,6 +1,6 @@
 # Sherlock
 
-Androskills is a collection of portable agent skills, inspired by [tstack](https://github.com/t3dotgg/tstack)'s `skills/<name>/SKILL.md` layout. **Sherlock** finds suitable skills for a request. **Ladder** coordinates an ordered sequence of user-chosen models to work on and review a task.
+Androskills is a collection of portable agent skills, inspired by [tstack](https://github.com/t3dotgg/tstack)'s `skills/<name>/SKILL.md` layout. **Sherlock** finds suitable skills for a request. **Ladder** guides an ordered sequence of user-chosen models to work on and review a task, with optional bounded multi-agent patterns when the host supports them.
 
 **Status:** first prototype. Sherlock can be invoked as `$sherlock` in compatible harnesses. An installed skill does not, by itself, force an agent to route every prompt through it; true before-every-prompt behavior needs an explicit integration in the host harness. No such hook is included here. See [design](docs/DESIGN.md).
 
@@ -36,9 +36,11 @@ Invoke `$ladder` and give it an ordered list of available provider/model IDs and
 
 By default each rung works through its assigned task and fixes what it can before handing off. It gets up to three complete work/review passes, including its initial pass, and stops retrying an individual blocker after two consecutive attempts without progress. A pass can contain many edits and tool calls. The next rung receives the remaining issues; later review stages still run when earlier ones succeed. You can set different limits for each rung. These are skill instructions, so a host must enforce any hard spending or execution limits.
 
-To reuse a list, copy [the example profile](skills/ladder/ladder.example.md) to `~/.config/androskills/ladder.md` and fill it in. The profile is read as instructions; it is not a program or a model configuration. Keep credentials out of it. A current request can override it.
+Alongside the ordered model stages, Ladder can select a separate coordination pattern: one agent, fan-out, effort scaling, pairs, a manager thread, long-lived leads, or a swarm. These patterns are described in the [coordination ladder](skills/ladder/references/coordination-ladder.md); they are options, not a required seven-stage pipeline. Long-lived leads and swarms are experimental and need host support and explicit authorization. Ladder can also use bounded parallel specialists for independent tasks, or blind-first reviewers followed by a single integrator. It preserves dissent and evidence instead of treating agreement as proof. These patterns are optional: sequential work remains the default, and host permissions, model routing, privacy and resource limits still apply. The [multi-agent reference](skills/ladder/references/multiagent.md) explains assignments, isolation, coordination and the evidence behind these choices.
 
-**Host support matters:** The skill does not install models, switch the active model, delegate across providers, enforce budgets, or send calls by itself. The harness must expose and permit the selected models and switching or delegation. If it cannot run a stage, Ladder preserves the work and provides a handoff for the user to run with the selected model. It reports which stages actually ran. Installing or invoking Sherlock does not automatically run Ladder on every prompt.
+To reuse a list, copy [the six-stage example profile](skills/ladder/ladder.example.md) to `~/.config/androskills/ladder.md` and fill it in. The profile is read as instructions; it is not a program or a model configuration. Keep credentials out of it. A current request can override it.
+
+**Host support matters:** The skill does not install models, switch the active model, create agents, enforce budgets, or send calls by itself. The harness must expose and permit the selected models and switching or delegation. If it cannot run a stage, Ladder preserves the work and provides a handoff for the user to run with the selected model. It reports which stages actually ran. Installing or invoking Sherlock does not automatically run Ladder on every prompt.
 
 ## Try the helper
 

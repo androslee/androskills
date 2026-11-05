@@ -21,11 +21,11 @@ Copy the skills you want into a skill directory supported by your harness:
 ```bash
 # DSH, for your user account
 mkdir -p ~/.dsh/skills
-cp -R skills/sherlock skills/ladder ~/.dsh/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify ~/.dsh/skills/
 
 # Codex, for your user account
 mkdir -p ~/.codex/skills
-cp -R skills/sherlock skills/ladder ~/.codex/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify ~/.codex/skills/
 ```
 
 Run these commands from this project's root. Do not overwrite an existing skill without reviewing it. Harnesses may need a fresh session to discover changes. DSH's catalog can also include project-specific, bundled and custom providers; filesystem scanning cannot represent all of those sources. Sherlock does not alter harness configuration or restart DSH.
@@ -41,6 +41,12 @@ Alongside the ordered model stages, Ladder can select a separate coordination pa
 To reuse a list, copy [the six-stage example profile](skills/ladder/ladder.example.md) to `~/.config/androskills/ladder.md` and fill it in. The profile is read as instructions; it is not a program or a model configuration. Keep credentials out of it. A current request can override it.
 
 **Host support matters:** The skill does not install models, switch the active model, create agents, enforce budgets, or send calls by itself. The harness must expose and permit the selected models and switching or delegation. If it cannot run a stage, Ladder preserves the work and provides a handoff for the user to run with the selected model. It reports which stages actually ran. Installing or invoking Sherlock does not automatically run Ladder on every prompt.
+
+## Remote verification modifier
+
+Invoke `$remote-verify` alongside `$ladder` or another workflow when a task needs verification on authorized external machines. Specify which stage or stages require it, the approved targets or inventory group, and the expected behavior. If physical hardware is required, say so. The modifier keeps verification within the current stage and carries results forward; it does not alter Ladder or automatically grant remote access. The harness must provide and enforce the necessary tools, permissions and limits. If required verification cannot run, the stage must report it as blocked rather than passed. See [the skill instructions](skills/remote-verify/SKILL.md).
+
+Example: `$ladder $remote-verify Implement the change and verify each implementation stage on the authorized test hosts in inventory group staging-lab; use the existing deployment workflow and report the candidate version, hosts and observed results.`
 
 ## Try the helper
 

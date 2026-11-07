@@ -1,0 +1,4 @@
+interface:
+  display_name: "Downshift"
+  short_description: "Plan once, hand off bounded work to cheaper models"
+  default_prompt: "Use $downshift to prepare a cost-aware plan and bounded task handoff for a cheaper model, using files or supported direct routing."

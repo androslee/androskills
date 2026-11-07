@@ -21,11 +21,11 @@ Copy the skills you want into a skill directory supported by your harness:
 ```bash
 # DSH, for your user account
 mkdir -p ~/.dsh/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify ~/.dsh/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/mason ~/.dsh/skills/
 
 # Codex, for your user account
 mkdir -p ~/.codex/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify ~/.codex/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/mason ~/.codex/skills/
 ```
 
 Run these commands from this project's root. Do not overwrite an existing skill without reviewing it. Harnesses may need a fresh session to discover changes. DSH's catalog can also include project-specific, bundled and custom providers; filesystem scanning cannot represent all of those sources. Sherlock does not alter harness configuration or restart DSH.
@@ -47,6 +47,35 @@ To reuse a list, copy [the six-stage example profile](skills/ladder/ladder.examp
 Invoke `$remote-verify` alongside `$ladder` or another workflow when a task needs verification on authorized external machines. Specify which stage or stages require it, the approved targets or inventory group, and the expected behavior. If physical hardware is required, say so. The modifier keeps verification within the current stage and carries results forward; it does not alter Ladder or automatically grant remote access. The harness must provide and enforce the necessary tools, permissions and limits. If required verification cannot run, the stage must report it as blocked rather than passed. See [the skill instructions](skills/remote-verify/SKILL.md).
 
 Example: `$ladder $remote-verify Implement the change and verify each implementation stage on the authorized test hosts in inventory group staging-lab; use the existing deployment workflow and report the candidate version, hosts and observed results.`
+
+## Mason: learn where a skill would help
+
+Use `$mason` at a task checkpoint to review repeated corrections, rediscovery
+or failed approaches for a worthwhile reusable intervention. It can recommend
+no change, reuse/routing, a script/docs/code fix, an existing-skill update, or a
+bounded new-skill pilot. It does not create a skill merely because a task was
+long or difficult.
+
+Mason checks existing coverage, including authorized inactive collections, and
+asks what would actually change the next task. It starts with the current model;
+a stronger review is an option for a named ambiguity, not a mandatory fee.
+Any efficiency claim needs an outcome-preserving comparison that counts
+instruction loading, authoring, review and maintenance as well as avoided work.
+The included scenarios are calibration examples, not measured proof of savings.
+
+Sherlock finds useful skills; Mason identifies a missing or improvable reusable
+workflow; skill-creator can turn an authorized proposal into a package. Mason
+does not install or activate its recommendations automatically. Regular
+end-of-task invocation needs host integration; installing the skill alone does
+not create a background monitor or schedule.
+
+Source: [Mason](skills/mason/SKILL.md). For a pilot or model/cost comparison, see
+[the evaluation protocol](skills/mason/references/evaluation.md). To install it
+from this repository, copy `skills/mason` into your harness's skill directory
+alongside the other authored skills.
+
+Example: `$mason Review the completed work for a reusable lesson. Check existing
+skills first and recommend none unless a concrete, testable benefit is likely.`
 
 ## Try the helper
 

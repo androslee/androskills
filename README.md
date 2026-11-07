@@ -77,6 +77,44 @@ alongside the other authored skills.
 Example: `$mason Review the completed work for a reusable lesson. Check existing
 skills first and recommend none unless a concrete, testable benefit is likely.`
 
+## Downshift: plan once, execute with a cheaper model
+
+Use `$downshift` when a stronger model should prepare exact, reusable task cards
+for a cheaper worker, then review results and repair the next wave. It supports
+both Markdown handoffs between separate harnesses and direct model handoffs when
+the same harness actually supports authorized routing. The skill has one shared
+contract and two mode guides; installing it does not configure an API router.
+
+Downshift checks whether planning overhead is likely to be worthwhile, preserves
+original acceptance, keeps the worker's context small, and defines finite waves,
+failed-attempt limits, evidence and return packets. Same-model self-review stays
+distinct from independent review. A worker may propose the next wave without
+silently expanding its assignment or marking unmet parent goals complete.
+Savings remain unproven until total planning, retries, review and integration
+cost is compared at equivalent quality. Unlike Ladder's general ordered stages,
+Downshift specializes in amortizing a reusable plan across cheaper execution.
+
+Install the authored skill from this repository into your harness's skill root:
+`cp -R skills/downshift ~/.dsh/skills/` or
+`cp -R skills/downshift ~/.codex/skills/` (review an existing installation first).
+See [the skill](skills/downshift/SKILL.md),
+[file mode](skills/downshift/references/files.md),
+[direct mode](skills/downshift/references/direct.md), and
+[evaluation](skills/downshift/references/evaluation.md).
+
+The optional local-only helper creates a new draft handoff directory without
+replacing existing files or calling models:
+
+```bash
+python3 skills/downshift/scripts/init_handoff.py /path/to/project/.downshift --mode files
+```
+
+Complete the generated contract and cards before execution. Example invocation:
+`$downshift Prepare a file handoff for my local worker using this existing
+backlog; plan one bounded wave, include self-review and a return-to-planner prompt.`
+For a single harness, request direct mode and name the permitted planner, worker
+and reviewer routes. Unsupported routing falls back to a file packet.
+
 ## Try the helper
 
 Python 3.10+ is enough; no extra packages, local model or API keys are required.

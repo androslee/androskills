@@ -26,7 +26,13 @@ starting artifacts, task difficulty and allowable tools comparable.
 
 Use `COSTS.csv` if tooling does not already capture this. Record planner creation
 and revisions, worker input/output/reasoning, retries, cached input, reviews,
-provider/tool charges, elapsed time and local resource time when measurable.
+provider/tool charges, image count/vision input where available, elapsed time and
+local resource time when measurable. For visual tasks, separately record how
+many artifacts the worker captured and inspected locally versus how many
+the expensive reviewer received, and vision input tokens if the provider
+exposes them; see [visual evidence](visual-evidence.md). The optional
+`COSTS.csv` template has columns for these counts and leaves unknown values
+empty.
 Record unmeasured values as empty/unknown, not zero. Include model/backend/effort
 and a pointer to the raw usage or invoice facts; do not store credentials.
 

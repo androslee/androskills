@@ -1,1 +1,1 @@
-run_id,wave_id,task_id,role,provider,model,backend,effort,event,input_tokens,cached_input_tokens,output_tokens,reasoning_tokens,wall_seconds,amount,currency,cost_basis,usage_evidence
+run_id,wave_id,task_id,role,provider,model,backend,effort,event,input_tokens,cached_input_tokens,output_tokens,reasoning_tokens,wall_seconds,amount,currency,cost_basis,usage_evidence,visual_artifacts_captured,visual_artifacts_local_reviewed,visual_artifacts_external_reviewed,vision_input_tokens

@@ -109,6 +109,12 @@ return a compact exception packet to the planner. Continue independent ready
 work within the existing budget; avoid repeatedly calling the expensive planner
 for small choices the worker can resolve from local evidence.
 
+For visual work, use [references/visual-evidence.md](references/visual-evidence.md):
+the worker captures and locally triages the complete required set, while the
+expensive reviewer sees only a bounded evidence subset unless uncertainty or
+risk justifies more. Keep raw artifacts available and mark unsupported visual
+claims unknown.
+
 The planner repairs affected cards and dependencies rather than rewriting the
 whole plan. Keep retired/failed assumptions in a short decision log, preserve
 original acceptance, and propose at most the next bounded wave. Execute that

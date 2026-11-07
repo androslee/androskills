@@ -1,0 +1,6 @@
+interface:
+  display_name: "Game Reference Loop"
+  short_description: "Research, compare and iteratively improve a game"
+  default_prompt: "Use $game-reference-loop to research the reference game, update this project's evidence-backed TODO and keep implementing and verifying ready tasks within the authorized run."
+policy:
+  allow_implicit_invocation: true

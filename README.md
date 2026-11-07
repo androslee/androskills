@@ -21,11 +21,11 @@ Copy the skills you want into a skill directory supported by your harness:
 ```bash
 # DSH, for your user account
 mkdir -p ~/.dsh/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth ~/.dsh/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth skills/game-reference-loop skills/mason skills/downshift ~/.dsh/skills/
 
 # Codex, for your user account
 mkdir -p ~/.codex/skills
-cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth ~/.codex/skills/
+cp -R skills/sherlock skills/ladder skills/remote-verify skills/model-scout skills/health-baseline skills/low-bandwidth skills/game-reference-loop skills/mason skills/downshift ~/.codex/skills/
 ```
 
 Run these commands from this project's root. Do not overwrite an existing skill without reviewing it. Harnesses may need a fresh session to discover changes. DSH's catalog can also include project-specific, bundled and custom providers; filesystem scanning cannot represent all of those sources. Sherlock does not alter harness configuration or restart DSH.
@@ -58,6 +58,56 @@ Both skills work independently or alongside Ladder. See [model scout](skills/mod
 ## Low-bandwidth responses
 
 Use `$low-bandwidth` for concise responses over a slow link. Ask for **pager** or **tweet** mode for a single response of at most 140 Unicode code points, or provide another limit and counting rule. Necessary accuracy and required disclosures still apply. Character counts do not guarantee a byte limit or a fit on a particular screen, and the skill cannot enforce transport limits or suppress host-generated messages. See [low-bandwidth](skills/low-bandwidth/SKILL.md).
+
+## Game reference improvement loop
+
+Use `$game-reference-loop` to research a reference game, build or resume an
+existing evidence-backed TODO and keep implementing and verifying ready tasks
+within the authorized run. It covers screenshot and gameplay comparison as well
+as levels, creatures, items, tech trees, mechanics and goals. Unknown features
+stay in a research queue; shipped content stays distinct from future announcements.
+
+The workflow recommends a more capable/higher-effort diagnosis and milestone
+review, with cheaper/lower-effort implementation of concrete tasks. It does not
+switch models or authorize cloud calls. It rotates across unfinished categories,
+shows captured screenshots, verifies behavior and preserves a resume checkpoint.
+A skill cannot create another turn after the host stops; unattended continuation
+requires a separately configured, authorized harness mechanism. See
+[the skill](skills/game-reference-loop/SKILL.md) and its
+[evidence protocol](skills/game-reference-loop/references/evidence.md).
+
+Example: `$game-reference-loop Improve this local game against the named
+reference; gather evidence, maintain the existing TODO, and keep working through
+ready tasks until the agreed checks pass or the run reaches a real limit.`
+
+## Mason: learn where a skill would help
+
+Use `$mason` at a task checkpoint to review repeated corrections, rediscovery
+or failed approaches for a worthwhile reusable intervention. It can recommend
+no change, reuse/routing, a script/docs/code fix, an existing-skill update, or a
+bounded new-skill pilot. It does not create a skill merely because a task was
+long or difficult.
+
+Mason checks existing coverage, including authorized inactive collections, and
+asks what would actually change the next task. It starts with the current model;
+a stronger review is an option for a named ambiguity, not a mandatory fee.
+Any efficiency claim needs an outcome-preserving comparison that counts
+instruction loading, authoring, review and maintenance as well as avoided work.
+The included scenarios are calibration examples, not measured proof of savings.
+
+Sherlock finds useful skills; Mason identifies a missing or improvable reusable
+workflow; skill-creator can turn an authorized proposal into a package. Mason
+does not install or activate its recommendations automatically. Regular
+end-of-task invocation needs host integration; installing the skill alone does
+not create a background monitor or schedule.
+
+Source: [Mason](skills/mason/SKILL.md). For a pilot or model/cost comparison, see
+[the evaluation protocol](skills/mason/references/evaluation.md). To install it
+from this repository, copy `skills/mason` into your harness's skill directory
+alongside the other authored skills.
+
+Example: `$mason Review the completed work for a reusable lesson. Check existing
+skills first and recommend none unless a concrete, testable benefit is likely.`
 
 ## Downshift: plan once, execute with a cheaper model
 

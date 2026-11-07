@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mason"
+  short_description: "Find evidence-backed opportunities for reusable skills"
+  default_prompt: "Use $mason to review this work for a worthwhile skill improvement, including the option to recommend none."

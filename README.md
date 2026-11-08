@@ -147,6 +147,23 @@ backlog; plan one bounded wave, include self-review and a return-to-planner prom
 For a single harness, request direct mode and name the permitted planner, worker
 and reviewer routes. Unsupported routing falls back to a file packet.
 
+## Research proposals: Workflow Lab
+
+[Workflow Lab](research/workflow-lab/README.md) collects **parked, untested** ideas
+for improving model workflows, including instruction interactions, evidence
+provenance, variation and selection, inhibiting assumptions, fault containment,
+feedback, measurement, informative testing, exploration, and bottlenecks.
+Each proposal has a stable ID, a condition for reconsidering it, source-linked
+background, and a question a bounded comparison could answer.
+
+These are research documents outside `skills/`, not installable skills or active
+instructions. Mason can consult the index during an authorized relevant review;
+the catalog also records how to plan a pilot, retain results, and distinguish
+evidence from adoption. There are no pilot results or demonstrated savings yet.
+The proposed occasional experiment capability reuses Mason's existing evaluation
+guidance; a standalone skill remains a design option. Installing this repository's
+skills does not schedule experiments or automatically adopt these proposals.
+
 ## Try the helper
 
 Python 3.10+ is enough; no extra packages, local model or API keys are required.

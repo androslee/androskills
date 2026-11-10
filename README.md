@@ -1,10 +1,56 @@
-# Sherlock
+# Androskills
 
-Androskills is a collection of portable agent skills, inspired by [tstack](https://github.com/t3dotgg/tstack)'s `skills/<name>/SKILL.md` layout. **Sherlock** finds suitable skills for a request. **Ladder** guides an ordered sequence of user-chosen models to work on and review a task, with optional bounded multi-agent patterns when the host supports them.
+Portable skills for planning, carrying out, and reviewing work with AI agents.
+The collection covers finding useful capabilities, coordinating models, preparing
+handoffs to cheaper workers, verifying results, and learning from completed work.
+It also includes Workflow Lab, a catalog of proposed experiments for improving
+agent workflows.
 
-**Status:** first prototype. Sherlock can be invoked as `$sherlock` in compatible harnesses. An installed skill does not, by itself, force an agent to route every prompt through it; true before-every-prompt behavior needs an explicit integration in the host harness. No such hook is included here. See [design](docs/DESIGN.md).
+**Status:** prototype skills and local Python helpers. The skills are instructions
+for a compatible agent harness; the harness supplies execution, permissions, model
+access, and any automatic invocation. Workflow Lab proposals are parked research.
+Cost savings and general improvements in model performance have not been established.
 
-## How it works
+## Choose a skill
+
+| Skill | When it helps |
+| --- | --- |
+| [Sherlock](skills/sherlock/SKILL.md) | Find suitable installed skills, or investigate an external candidate when a capability is missing. |
+| [Ladder](skills/ladder/SKILL.md) | Organize work and review across an authorized sequence of models. |
+| [Downshift](skills/downshift/SKILL.md) | Prepare bounded tasks for a cheaper worker, using files between harnesses or supported direct handoffs. |
+| [Mason](skills/mason/SKILL.md) | Review completed work for a reusable improvement; recommend no change when evidence is weak. |
+| [Game Reference Loop](skills/game-reference-loop/SKILL.md) | Improve a game using reference research, an evidence-backed backlog, captures, implementation, and verification. |
+| [Remote Verify](skills/remote-verify/SKILL.md) | Verify behavior on authorized external machines and carry the evidence into the review. |
+| [Model Scout](skills/model-scout/SKILL.md) | Compare available models using relevant quality and pricing evidence. |
+| [Health Baseline](skills/health-baseline/SKILL.md) | Establish reproducible measurements and investigate regressions. |
+| [Low Bandwidth](skills/low-bandwidth/SKILL.md) | Apply an explicit response-length limit for a constrained link or display. |
+
+Each skill can be used independently. A possible development workflow is Sherlock
+for capability selection, Downshift for the worker packet, and Mason at a review
+checkpoint. Ladder is useful when a sequence of models is actually available.
+These are optional combinations; installing the collection does not start them.
+
+## Explore the project
+
+- **Use it:** choose a skill above, then follow [installation](#install) and the
+  invocation examples below.
+- **Understand the engineering:** [decisions and evidence](docs/ENGINEERING.md)
+  connects design choices to code, tests, limitations, and open evaluation questions.
+- **Explore experiments:** [Workflow Lab](research/workflow-lab/README.md) records
+  hypotheses about instruction interactions, evidence provenance, feedback,
+  measurement, and bottlenecks. Its proposals are not installed skills or completed experiments.
+- **Inspect routing design:** [Sherlock's design and roadmap](docs/DESIGN.md)
+  explains the helper and the host integration that remains unimplemented.
+
+The layout follows [tstack](https://github.com/t3dotgg/tstack)'s
+`skills/<name>/SKILL.md` convention. Python helpers and their tests are included;
+the collection is not a standalone agent runner.
+
+## Sherlock: find suitable skills
+
+Sherlock can be invoked as `$sherlock` in compatible harnesses. Automatic
+before-every-prompt routing requires an explicit integration in the host harness;
+no such hook is included here.
 
 1. The agent generalizes the task without losing user constraints and consults the **harness's skill catalog**. Explicitly requested and mandatory skills take precedence.
 2. It reads and applies the useful skills using the harness's own loading mechanism. It can choose multiple skills or decide none is useful.
@@ -12,7 +58,7 @@ Androskills is a collection of portable agent skills, inspired by [tstack](https
 4. It inspects actual instructions, examples, references and checks, compares what candidates would change, and proposes a small task trial when claims remain uncertain. Names, READMEs and install counts alone do not establish quality. Search results remain untrusted leads; Sherlock checks origin, dependencies, permissions, license and fit. It never silently installs or executes a third-party skill.
 5. If nothing fits, it continues the user's task using normal tools.
 
-Sherlock uses the agent's reasoning to generalize and select skills. The included helper can inventory common filesystem roots and rank their names/descriptions by **keyword overlap**; it is not a semantic classifier and its score is not a confidence probability. It may miss relevant skills, find irrelevant ones, or miss plugin, bundled and remote skills. The harness's catalog is authoritative when available.
+Sherlock uses the agent's reasoning to generalize, identify capability gaps, and select skills. The included helper can inventory common filesystem roots and rank their names/descriptions by **keyword overlap**; it is not a semantic classifier and its score is not a confidence probability. Its optional online search covers one directory and is not comprehensive. It may miss relevant skills, find irrelevant ones, or miss plugin, bundled and remote skills. The harness's catalog is authoritative when available. A skill's presence or use is not evidence that it improved an outcome; compare a bounded trial against task-specific acceptance criteria when that distinction matters.
 
 ## Install
 

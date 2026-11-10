@@ -8,8 +8,8 @@ Androskills is a collection of portable agent skills, inspired by [tstack](https
 
 1. The agent generalizes the task without losing user constraints and consults the **harness's skill catalog**. Explicitly requested and mandatory skills take precedence.
 2. It reads and applies the useful skills using the harness's own loading mechanism. It can choose multiple skills or decide none is useful.
-3. If no installed skill fits and online search is permitted, it searches using short, generic capability terms, not the full prompt or private details.
-4. It treats search results as untrusted leads and checks their origin, actual instructions, dependencies, permissions, license and fit. It never silently installs or executes a third-party skill.
+3. If no installed skill fits—or a match covers only part of the need—and online search is permitted, Sherlock searches in bounded stages: a broad capability query, then targeted queries based on the specific gap. For example, a request for “UI design” may need separate searches for interaction design, distinctive art direction, domain conventions, and visual critique. Sherlock stops early when the first candidate is already specific and sufficient.
+4. It inspects actual instructions, examples, references and checks, compares what candidates would change, and proposes a small task trial when claims remain uncertain. Names, READMEs and install counts alone do not establish quality. Search results remain untrusted leads; Sherlock checks origin, dependencies, permissions, license and fit. It never silently installs or executes a third-party skill.
 5. If nothing fits, it continues the user's task using normal tools.
 
 Sherlock uses the agent's reasoning to generalize and select skills. The included helper can inventory common filesystem roots and rank their names/descriptions by **keyword overlap**; it is not a semantic classifier and its score is not a confidence probability. It may miss relevant skills, find irrelevant ones, or miss plugin, bundled and remote skills. The harness's catalog is authoritative when available.
